@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AssureX — UNILAG Quality Assurance System</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     HTML STRUCTURE
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-brand">
+      <div class="nav-logo">AX</div>
+      <div>
+        <div class="nav-title">AssureX</div>
+        <div class="nav-sub">UNILAG Quality Assurance System</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="pwa-status" id="pwa-status">
+        <span class="pwa-dot" style="background:#16A34A" id="pwa-dot"></span>
+        <span id="pwa-text" style="font-size:10px;color:#16A34A">PWA Online</span>
+      </div>
+      <select id="role-select">
+        <option value="student">👤 Student</option>
+        <option value="lecturer">👨‍🏫 Lecturer / Faculty</option>
+        <option value="deptadmin">🏢 Dept. Admin</option>
+        <option value="admin">🔐 QA Admin</option>
+        <option value="external">🌐 External Stakeholder</option>
+      </select>
+      <div class="nav-badge">
+        <div class="notif-dot">3</div>
+        🔔
+      </div>
+      <div class="avatar" id="nav-avatar" style="background:#7C3AED">AB</div>
+    </div>
+  </nav>
+
+  <!-- Layout -->
+  <div id="layout">
+    <aside id="sidebar">
+      <div id="nav-items"></div>
+      <div class="sidebar-footer">
+        <div class="sf-label">Logged in as</div>
+        <div class="sf-name" id="sf-name">Aisha Bello</div>
+        <div class="sf-role" id="sf-role">Student</div>
+        <div class="access-badge" id="access-badge">Limited Access</div>
+      </div>
+    </aside>
+
+    <main id="main">
+      <div class="page-title" id="page-title">Dashboard</div>
+      <div class="page-sub" id="page-sub">Your real-time quality assurance overview</div>
+      <div id="page-content"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════════════════════════ -->
+
+<script src="app.js"></script>
+</body>
+</html>
