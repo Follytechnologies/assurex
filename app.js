@@ -36,19 +36,26 @@ const PAGE_SUBS = {
 };
 
 const DEPT_DATA = [
-  { dept:'Sciences',    score:88, prev:84, color:'#007AC2' },
-  { dept:'Engineering', score:81, prev:83, color:'#7C3AED' },
-  { dept:'Arts',        score:76, prev:71, color:'#E05C2A' },
-  { dept:'Law',         score:84, prev:82, color:'#16A34A' },
-  { dept:'Medicine',    score:90, prev:89, color:'#0891B2' },
-  { dept:'Education',   score:72, prev:75, color:'#EA580C' },
+  { dept:'Sciences',         score:88, prev:84, color:'#007AC2' },
+  { dept:'Engineering',      score:81, prev:83, color:'#7C3AED' },
+  { dept:'Arts',             score:76, prev:71, color:'#E05C2A' },
+  { dept:'Law',              score:84, prev:82, color:'#16A34A' },
+  { dept:'Medicine',         score:90, prev:89, color:'#0891B2' },
+  { dept:'Education',        score:72, prev:75, color:'#EA580C' },
+  { dept:'Social Sciences',  score:79, prev:77, color:'#6D28D9' },
+  { dept:'Business Admin',   score:83, prev:80, color:'#0369A1' },
+  { dept:'Pharmacy',         score:86, prev:84, color:'#15803D' },
+  { dept:'Environmental Sci',score:74, prev:72, color:'#B45309' },
+  { dept:'Basic Med Sci',    score:87, prev:85, color:'#0E7490' },
+  { dept:'Dental Sciences',  score:85, prev:83, color:'#7C3AED' },
+  { dept:'Postgraduate',     score:80, prev:78, color:'#BE185D' },
 ];
 
 const EVALS = [
-  { course:'MTH 201 – Real Analysis',    lecturer:'Dr. A. Salami', score:82,   status:'Submitted' },
-  { course:'CSC 301 – Data Structures',  lecturer:'Dr. C. Eze',    score:76,   status:'Submitted' },
-  { course:'STA 201 – Probability',      lecturer:'Dr. M. Adamu',  score:null, status:'Pending'   },
-  { course:'PHY 201 – Electromagnetism', lecturer:'Dr. K. Lawal',  score:null, status:'Pending'   },
+  { course:'MTH 201 – Real Analysis',       lecturer:'Dr. A. Salami',  score:82,   status:'Submitted', faculty:'Sciences'        },
+  { course:'LAW 301 – Constitutional Law',  lecturer:'Dr. C. Eze',     score:76,   status:'Submitted', faculty:'Law'             },
+  { course:'BUS 201 – Business Finance',    lecturer:'Dr. M. Adamu',   score:null, status:'Pending',   faculty:'Business Admin'  },
+  { course:'PHR 201 – Pharmacology I',      lecturer:'Dr. K. Lawal',   score:null, status:'Pending',   faculty:'Pharmacy'        },
 ];
 
 const PEER_REVIEWS = [
@@ -275,12 +282,15 @@ function renderEvaluations() {
   );
 
   let rightContent;
-  if(state.evalDone) {
+ if(state.evalDone) {
     rightContent = h('div',{class:'success-state'},
       h('div',{class:'success-icon'},'✅'),
       h('div',{class:'success-title'},'Submitted Anonymously!'),
       h('div',{class:'success-sub'},'Your feedback is recorded. No identity data was stored.'),
       h('div',{class:'success-ndpr'},'🔒 NDPR Compliant — Zero identity linkage confirmed'),
+      h('div',{style:{background:'#EDE9FE',border:'1px solid #7C3AED',borderRadius:'8px',padding:'8px 14px',fontSize:'11px',color:'#1A1035',marginBottom:'16px',textAlign:'left'}},
+        '🔑 One-time cryptographic token issued for this submission. Token is hashed and discarded after use — it cannot be linked back to your identity. Duplicate submissions for this course this semester are now prevented.'
+      ),
       btn('Back to List','btn-primary',()=>{ state.evalDone=false; state.evalSelected=null; render(); })
     );
   } else if(state.evalSelected !== null) {
@@ -647,7 +657,13 @@ function renderCollaboration() {
 function renderAuditLog() {
   const typeColors = {'AI Report':'#EDE9FE','Peer Review':'#DCFCE7','Survey':'#DBEAFE','System':'#F0F4FC','Feedback':'#FEF9C3','Export':'#FFEDD5'};
   return card(
-    h('div',{class:'card-title'},'System Audit Log — All Activity Tracked'),
+    h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'14px'}},
+      h('div',{class:'card-title',style:{marginBottom:'0'}},'System Audit Log — All Activity Tracked'),
+      h('div',{style:{display:'flex',gap:'8px'}},
+        btn('Export as CSV','btn-outline btn-sm',()=>alert('In production: exports full audit log as CSV with timestamps and user hashes.')),
+        btn('Export as JSON','btn-ghost btn-sm',()=>alert('In production: exports all institutional data as JSON for portability.'))
+      )
+    ),
     h('div',{class:'audit-info'},'🔍 Every user action, AI inference call, and data export is logged here. Required for NDPR 2019 accountability compliance.'),
     h('table',{},
       h('thead',{},h('tr',{},...['Time','User','Action','Type'].map(hd=>h('th',{},hd)))),
